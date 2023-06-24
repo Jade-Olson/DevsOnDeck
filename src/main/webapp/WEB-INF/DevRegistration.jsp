@@ -33,7 +33,7 @@
 <div class="container">
 <div class="row p-4 mt-5 align-items-center rounded-3 border shadow-lg">
     <h1 class="display-4">Developer Sign Up</h1>
-    <form:form method="POST" action="/register" modelAttribute="newDev">
+    <form:form method="POST" action="/devs/register" modelAttribute="newDev">
         <div class="mt-2 row">
         	<div class="col">
 	            <form:label path="firstName" class="form-label">First Name:</form:label>

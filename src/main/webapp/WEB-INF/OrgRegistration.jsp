@@ -32,7 +32,7 @@
 <div class="container">
 <div class="row p-4 mt-5 align-items-center rounded-3 border shadow-lg">
     <h1 class="display-4">Organization Sign Up</h1>
-    <form:form method="POST" action="/register" modelAttribute="newOrg">
+    <form:form method="POST" action="/orgs/register" modelAttribute="newOrg">
     	<div class="mt-2">
             <form:label path="orgName" class="form-label">Org Name:</form:label>
             <form:input path="orgName" class="form-control"/>

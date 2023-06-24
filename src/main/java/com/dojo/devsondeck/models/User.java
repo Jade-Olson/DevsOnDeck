@@ -47,7 +47,6 @@ public class User {
 	private String password;
 	
 	@NotNull
-	@Size(min=1, message="Comfirm Password must not be blank!!")
 	private String confirmPassword;
 	
 	@NotNull
