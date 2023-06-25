@@ -40,6 +40,8 @@ public class PositionNeededSkills {
 	@JoinColumn(name="position_id")
 	private Position positions;
 
+	public PositionNeededSkills() {}
+	
 	public Long getId() {
 		return id;
 	}

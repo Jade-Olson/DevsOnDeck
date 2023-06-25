@@ -70,6 +70,9 @@ public class User {
 	
 	@OneToMany(mappedBy="users", fetch = FetchType.LAZY)
     private List<UserHasSkills> skills;
+	
+	public User() {}
+	
 
 	public List<UserHasSkills> getSkills() {
 		return skills;

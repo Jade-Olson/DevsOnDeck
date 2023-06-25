@@ -43,6 +43,8 @@ public class Skill {
 	private List<PositionNeededSkills> position;
 
 
+	public Skill() {}
+	
 	public Long getId() {
 		return id;
 	}

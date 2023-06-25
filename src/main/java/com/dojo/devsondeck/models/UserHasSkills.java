@@ -40,6 +40,9 @@ public class UserHasSkills {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updatedAt;
 
+	
+	public UserHasSkills() {}
+	
 	public Long getId() {
 		return id;
 	}

@@ -45,6 +45,8 @@ public class Position {
 	@OneToMany(mappedBy="positions",fetch = FetchType.LAZY)
 	private List<PositionNeededSkills> skills;
 
+	public Position() {}
+	
 	public Long getId() {
 		return id;
 	}
