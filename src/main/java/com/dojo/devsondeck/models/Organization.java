@@ -70,6 +70,7 @@ public class Organization {
 	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
     private List<Position> positions;
 	
+	public Organization() {}
 
 	public Long getId() {
 		return id;
