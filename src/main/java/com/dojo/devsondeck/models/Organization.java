@@ -6,6 +6,8 @@ import java.util.List;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -67,7 +69,7 @@ public class Organization {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updatedAt;
 	
-	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="organization", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Position> positions;
 	
 	public Organization() {}

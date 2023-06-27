@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +25,16 @@ public class PositionNeededSkills {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="skill_id")
+	private Skill skills;
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="position_id")
+	private Position positions;
+	
 	@Column(updatable=false)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createdAt;
@@ -31,14 +42,6 @@ public class PositionNeededSkills {
 	@Column(updatable=true)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updatedAt;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="skill_id")
-	private Skill skills;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="position_id")
-	private Position positions;
 
 	public PositionNeededSkills() {}
 	

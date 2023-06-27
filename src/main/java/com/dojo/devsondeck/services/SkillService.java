@@ -1,11 +1,14 @@
 package com.dojo.devsondeck.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dojo.devsondeck.models.Skill;
+import com.dojo.devsondeck.models.User;
 import com.dojo.devsondeck.repositories.SkillsRepo;
+import com.dojo.devsondeck.repositories.userRepo;
 
 
 
@@ -29,4 +32,13 @@ public class SkillService {
 		
 		return SkillRepo.findAll();
 	}
+	
+    public Skill findById(Long id) {
+		Optional<Skill> optSkill = SkillRepo.findById(id);
+		if(optSkill.isPresent()) {
+			return optSkill.get();
+		} else {
+			return null;
+		}
+}
 }
