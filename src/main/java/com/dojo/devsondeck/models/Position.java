@@ -18,6 +18,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Positions")
@@ -28,6 +29,11 @@ public class Position {
 	private Long id;
 	
 	@NotNull
+	@Size(min=1, message="Name is required!!")
+	private String name;
+	
+	@NotNull
+	@Size(min=1, message="Description is required!!")
 	private String description;
 	
 	@Column(updatable=false)
@@ -53,6 +59,31 @@ public class Position {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	public List<PositionNeededSkills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<PositionNeededSkills> skills) {
+		this.skills = skills;
 	}
 
 	public String getDescription() {

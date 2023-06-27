@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dojo.devsondeck.models.LoginUser;
 import com.dojo.devsondeck.models.Organization;
+import com.dojo.devsondeck.models.Position;
 import com.dojo.devsondeck.models.User;
 import com.dojo.devsondeck.services.OrganizationService;
 import com.dojo.devsondeck.services.UserService;
@@ -96,5 +97,12 @@ public class LoginController {
 		}
 		session.setAttribute("org", org);
 		return "redirect:/orgs/dashboard";
+	}
+	
+	// Display New Position Form
+	@GetMapping("/orgs/jobs/new")
+	public String languages(Model model, HttpSession session) {
+		model.addAttribute("newPos", new Position());
+		return "NewPosition.jsp";
 	}
 }
