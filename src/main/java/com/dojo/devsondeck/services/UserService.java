@@ -1,5 +1,6 @@
 package com.dojo.devsondeck.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -64,5 +65,13 @@ public class UserService {
 		} else {
 			return null;
 		}
+	}
+	
+	public void update(User user) {
+		userRepo.save(user);
+	}
+	
+	public List<User> allUsers(){
+		return userRepo.findAll();
 	}
 }

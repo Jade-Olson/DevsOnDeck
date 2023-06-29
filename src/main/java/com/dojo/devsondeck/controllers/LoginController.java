@@ -1,5 +1,6 @@
 package com.dojo.devsondeck.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,14 @@ public class LoginController {
 	
 	@Autowired
 	private PositionService positionServ;
+	
+	private List<String> usaStates = Arrays.asList("AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY");
+	
 	// Display Dev Registration Page
 	@GetMapping("/devs/register")
 	public String devRegistrationPage(Model model) {
 		model.addAttribute("newDev", new User());
+		model.addAttribute("usaStates", usaStates);
 		return "DevRegistration.jsp";
 	}
 	
@@ -47,14 +52,17 @@ public class LoginController {
 	@GetMapping("/orgs/register")
 	public String orgRegistrationPage(Model model) {
 		model.addAttribute("newOrg", new Organization());
+		model.addAttribute("usaStates", usaStates);
 		return "OrgRegistration.jsp";
 	}
 	
 	// Dev Registration Handling
 	@PostMapping("/devs/register")
-	public String devRegistration(@Valid @ModelAttribute("newDev") User newUser, BindingResult result, HttpSession session) {
+	public String devRegistration(@Valid @ModelAttribute("newDev") User newUser, BindingResult result, HttpSession session, Model model) {
+		newUser.setBio("none");
 		userServ.register(newUser, result);
 		if(result.hasErrors()) {
+			model.addAttribute("usaStates", usaStates);
 			return "DevRegistration.jsp";
 		}
 		session.setAttribute("dev", userServ.findById(newUser.getId()));
@@ -63,9 +71,10 @@ public class LoginController {
 	
 	// Org Registration Handling
 	@PostMapping("/orgs/register")
-	public String orgRegistration(@Valid @ModelAttribute("newOrg") Organization newOrg, BindingResult result, HttpSession session) {
+	public String orgRegistration(@Valid @ModelAttribute("newOrg") Organization newOrg, BindingResult result, HttpSession session, Model model) {
 		orgServ.register(newOrg, result);
 		if(result.hasErrors()) {
+			model.addAttribute("usaStates", usaStates);
 			return "OrgRegistration.jsp";
 		}
 		session.setAttribute("org", orgServ.findById(newOrg.getId()));
@@ -111,16 +120,6 @@ public class LoginController {
 		return "redirect:/orgs/dashboard";
 	}
 	
-	// Display New Position Form
-	@GetMapping("/orgs/jobs/new")
-	public String languages(Model model, HttpSession session) {
-		model.addAttribute("newPos", new Position());
-		List<Skill> skill = skillServ.AllSkills();
-		model.addAttribute("skills",skill);
-		model.addAttribute("newPos",new Position());
-		return "NewPosition.jsp";
-	}
-	
 	@GetMapping("/devs/dashboard")
 	public String devDashboard(Model model) {
 		List<Position> positions = positionServ.AllPositions();
@@ -129,5 +128,10 @@ public class LoginController {
 		return"devDashboard.jsp";
 	}
 	
-	
+	@GetMapping("/logout")
+    public String logout(HttpSession session) {
+    	session.removeAttribute("dev");
+    	session.removeAttribute("org");
+    	return "redirect:/devs/login";
+    }
 }
