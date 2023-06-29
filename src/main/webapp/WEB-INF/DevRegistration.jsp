@@ -65,8 +65,9 @@
             <div class="col-sm-1">
 	            <form:label path="state" class="form-label">State:</form:label>
 	            <form:select path="state" class="form-select">
-	            	<option></option>
-	            	<!-- TO-DO: States Logic -->
+	            	<c:forEach var="OneState" items="${usaStates}">
+	            		<option value="${OneState}"><c:out value="${OneState}"/></option>
+	            	</c:forEach>
 	            </form:select>
 	            <form:errors path="state" class="text-danger"/>
             </div>

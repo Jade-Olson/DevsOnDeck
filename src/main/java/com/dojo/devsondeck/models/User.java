@@ -59,6 +59,10 @@ public class User {
 	private String city;
 	
 	@NotNull
+	@Size(min=1, message="Bio must not be blank!!")
+	private String bio;
+	
+	@NotNull
 	private String state;
 	
 	@Column(updatable=false)
@@ -86,6 +90,17 @@ public class User {
 	public Long getId() {
 		return id;
 	}
+	
+
+	public String getBio() {
+		return bio;
+	}
+
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+
 
 	public void setId(Long id) {
 		this.id = id;
