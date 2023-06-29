@@ -40,7 +40,7 @@ public class SkillsControllers {
 	}
 	
 	// Used for both languages an frameworks and it will render if the type is right in the jsp page
-	@GetMapping("/skills/addSkill/{id}")
+	@GetMapping("/skills/addLanguage/{id}")
 	private String addLanguage(HttpSession session, @PathVariable("id") Long id) {
 		if (session.getAttribute("dev") == null) {
 			return "redirect:/devs/login";
@@ -57,8 +57,38 @@ public class SkillsControllers {
 		
 		return "redirect:/devs/skills/languages";
 		
-			
+	}
+	
+	@GetMapping("/devs/skills/frameworks")
+	public String FrameWorks(HttpSession session, Model model) {
+		if (session.getAttribute("dev") == null) {
+			return "redirect:/";
+		}
+		List<Skill> skill = skillServ.AllSkills();
+		model.addAttribute("skills",skill);
+		User userId = (User)session.getAttribute("dev");
+		User loggedUser = userServ.findById(userId.getId());
+		model.addAttribute("user",loggedUser);
 		
+		return "FrameWorks.jsp";	
+	}
+	
+	@GetMapping("/skills/addFrameWork/{id}")
+	private String addFrameWork(HttpSession session, @PathVariable("id") Long id) {
+		if (session.getAttribute("dev") == null) {
+			return "redirect:/devs/login";
+		}
+		
+		User user = (User) session.getAttribute("dev");
+		User loggedUser = userServ.findById(user.getId());
+		Skill addedSkill = skillServ.findById(id);
+		UserHasSkills userSkills = new UserHasSkills();
+		userSkills.setUsers(loggedUser);
+		userSkills.setSkills(addedSkill);
+		addedSkill.getUsers().add(userSkills);
+		skillServ.AddSkill(addedSkill);
+		
+		return "redirect:/devs/skills/frameworks";
 		
 	}
 	

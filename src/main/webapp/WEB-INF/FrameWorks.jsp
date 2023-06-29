@@ -19,11 +19,10 @@
 
 <c:forEach items="${skills}" var="skill">
 
-<c:if test="${skill.skillType == 'language'}">
+<c:if test="${skill.skillType == 'framework'}">
 
-<form action ="/skills/addSkill/${skill.id}" method ="get">
+<form action ="/skills/addFrameWork/${skill.id}" method ="get">
  <button><c:out value="${skill.skillName}"/></button>
- 
 </form>
  </c:if>
  </c:forEach>

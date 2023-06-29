@@ -46,7 +46,6 @@ public class Position {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updatedAt;
 	
-	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="organaization_id")
     private Organization organization;

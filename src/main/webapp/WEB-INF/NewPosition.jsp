@@ -1,8 +1,11 @@
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page isErrorPage="true" %> 
+<%@ page isELIgnored="false" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +30,7 @@
 <div class="container">
 <div class="row p-4 mt-5 align-items-center rounded-3 border shadow-lg">
     <h1 class="display-4">Add a Position</h1>
-    <form:form method="POST" action="/devs/login" modelAttribute="newPos">
+    <form:form method="POST" action="add/position" modelAttribute="newPos">
         <div class="mt-2">
             <form:label path="name" class="form-label">Name:</form:label>
             <form:input path="name" class="form-control"/>
@@ -41,7 +44,10 @@
         <div class="mt-2">
             <form:label path="skills" class="form-label">Skills:</form:label>
             <form:select path="skills" class="form-control">
-            	<!-- forEach of Skills List -->
+            	
+            		<form:options items="${skills}" itemValue="id" itemLabel="skillName" />
+          
+            	
             </form:select>
             <form:errors path="skills" class="text-danger"/>
         </div>

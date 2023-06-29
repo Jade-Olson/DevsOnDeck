@@ -1,5 +1,7 @@
 package com.dojo.devsondeck.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.dojo.devsondeck.models.LoginUser;
 import com.dojo.devsondeck.models.Organization;
 import com.dojo.devsondeck.models.Position;
+import com.dojo.devsondeck.models.Skill;
 import com.dojo.devsondeck.models.User;
 import com.dojo.devsondeck.services.OrganizationService;
+import com.dojo.devsondeck.services.PositionService;
+import com.dojo.devsondeck.services.SkillService;
 import com.dojo.devsondeck.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,8 +27,15 @@ import jakarta.validation.Valid;
 public class LoginController {
 	@Autowired
 	private UserService userServ;
+	
 	@Autowired
 	private OrganizationService orgServ;
+	
+	@Autowired
+	private SkillService skillServ;
+	
+	@Autowired
+	private PositionService positionServ;
 	// Display Dev Registration Page
 	@GetMapping("/devs/register")
 	public String devRegistrationPage(Model model) {
@@ -103,6 +115,19 @@ public class LoginController {
 	@GetMapping("/orgs/jobs/new")
 	public String languages(Model model, HttpSession session) {
 		model.addAttribute("newPos", new Position());
+		List<Skill> skill = skillServ.AllSkills();
+		model.addAttribute("skills",skill);
+		model.addAttribute("newPos",new Position());
 		return "NewPosition.jsp";
 	}
+	
+	@GetMapping("/devs/dashboard")
+	public String devDashboard(Model model) {
+		List<Position> positions = positionServ.AllPositions();
+		model.addAttribute("positions", positions);
+		
+		return"devDashboard.jsp";
+	}
+	
+	
 }
