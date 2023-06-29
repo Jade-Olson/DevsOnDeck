@@ -40,5 +40,10 @@ public class SkillService {
 		} else {
 			return null;
 		}
+		
 }
+    public List<Skill> findAllById(List<Long> ids) {
+        return (List<Skill>)SkillRepo.findAllById(ids);
+    }
+    
 }

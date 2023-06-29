@@ -1,5 +1,7 @@
 package com.dojo.devsondeck.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,12 @@ public class PositionService {
 	public Position AddPosition(Position position) {
 		return positionRepo.save(position);
 	}
+
+	public List<Position> AllPositions(){
+			
+			return positionRepo.findAll();
+		}
+	
+	
 
 }

@@ -21,7 +21,7 @@
 
 <c:if test="${skill.skillType == 'language'}">
 
-<form action ="/skills/addSkill/${skill.id}" method ="get">
+<form action ="/skills/addLanguage/${skill.id}" method ="get">
  <button><c:out value="${skill.skillName}"/></button>
  
 </form>
