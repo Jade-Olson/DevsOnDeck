@@ -9,6 +9,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,11 +46,12 @@ public class Position {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updatedAt;
 	
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="organaization_id")
     private Organization organization;
 	
-	@OneToMany(mappedBy="positions",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="positions",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<PositionNeededSkills> skills;
 
 	public Position() {}
