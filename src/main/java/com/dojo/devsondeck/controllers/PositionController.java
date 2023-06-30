@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dojo.devsondeck.models.Organization;
@@ -40,10 +43,51 @@ public class PositionController {
 	// Org Dashboard render
 	@GetMapping("/orgs/dashboard")
 	public String dashboard(Model model, HttpSession session) {
+		if (session.getAttribute("org") == null) {
+			return "redirect:/orgs/login";
+		}
 		model.addAttribute("allPositions", positionServ.AllPositions());
 		model.addAttribute("devs", userServ.allUsers());
-		return "OrgDashboard.jsp";
+		return "orgDashboard.jsp";
 	}
+	
+	 @DeleteMapping("/orgs/delete/{id}")
+	    public String destroy(@PathVariable("id") Long id,HttpSession session) {
+		 if (session.getAttribute("org") == null) {
+				return "redirect:/orgs/login";
+			}
+		 positionServ.delete(id);
+	        return "redirect:/orgs/dashboard";
+	    }
+	 
+	 @GetMapping("/orgs/{id}/edit")
+		public String edit(@PathVariable("id") Long id, Model model,HttpSession session) {
+			if (session.getAttribute("org") == null) {
+				return "redirect:/orgs/login";
+			}
+			
+			Position position = positionServ.findById(id);
+			model.addAttribute("position", position);
+			return "EditPos.jsp";
+		}
+	 
+	    @RequestMapping(value="/postition/{id}", method=RequestMethod.PUT)
+	    public String edit(@PathVariable("id") Long id,@Valid @ModelAttribute("position") Position position, BindingResult result, HttpSession session
+	 		   ,Model model) {
+	    	 Organization org = (Organization) session.getAttribute("org");
+	    	if (session.getAttribute("org") == null) {
+				return "redirect:/orgs/login";
+			}
+	    	if (result.hasErrors()) {
+		    	 
+		        return "EditPos.jsp";
+		    }
+	    	position.setId(id);
+	    	position.setOrganization(org);
+	    	positionServ.AddPosition(position);
+	    	return"redirect:/orgs/dashboard";
+	    }
+
 	
 	// Display New Position Form
 	@GetMapping("/orgs/jobs/new")
@@ -59,8 +103,11 @@ public class PositionController {
 	}
 	
 	@PostMapping("/orgs/jobs/add/position")
-	public String addPosition(@Valid @ModelAttribute("newPos") Position newPosition, BindingResult result, HttpSession session, @RequestParam("skills") List<Long> skillIds
+	public String addPosition(@Valid @ModelAttribute("newPos") Position newPosition, BindingResult result, HttpSession session
 		   ,Model model) {
+		if (session.getAttribute("org") == null) {
+			return "redirect:/orgs/login";
+		}
 		List<PositionNeededSkills> positionSkills = new ArrayList<>();
 		List<Skill> skill = skillServ.AllSkills();
 	    if (result.hasErrors()) {
@@ -72,19 +119,7 @@ public class PositionController {
 	    newPosition.setOrganization(orgServ.findById(org.getId()));
 	    positionServ.AddPosition(newPosition);
 	    
-	    PositionNeededSkills positionSkill = new PositionNeededSkills();
-	    
-	    positionSkill.setPositions(newPosition);
-	    
-	    for(Long skillId : skillIds) {
-	    	
-	    	Skill skills = skillServ.findById(skillId);
-	    	positionSkill.setSkills(skills);
-	    	skillServ.AddSkill(skills);
-	    	
-	    }
-	    
-
+	  
 	    return "redirect:/orgs/dashboard";
 	}	
 }

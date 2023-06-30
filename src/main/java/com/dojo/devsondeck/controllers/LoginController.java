@@ -121,9 +121,20 @@ public class LoginController {
 	}
 	
 	@GetMapping("/devs/dashboard")
-	public String devDashboard(Model model) {
+	public String devDashboard(Model model ,HttpSession session) {
+		if (session.getAttribute("dev") == null) {
+			return "redirect:/devs/login";
+		}
+		User dev = (User) session.getAttribute("dev");
+		User loggedUser = userServ.findById(dev.getId());
+		model.addAttribute("dev",loggedUser);
+		
 		List<Position> positions = positionServ.AllPositions();
 		model.addAttribute("positions", positions);
+		
+		List<Skill> skill = skillServ.AllSkills();
+		model.addAttribute("skills", skill);
+		
 		
 		return"devDashboard.jsp";
 	}

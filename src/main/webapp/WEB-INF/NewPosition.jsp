@@ -43,13 +43,6 @@
         </div>
         <div class="mt-2">
             <form:label path="skills" class="form-label">Skills:</form:label>
-            <form:select path="skills" class="form-control" multiple>
-            	
-            		<form:options items="${skills}" itemValue="id" itemLabel="skillName" />
-          
-            	
-            </form:select>
-            <form:errors path="skills" class="text-danger"/>
         </div>
         <div class="mt-2">
 	        <input type="submit" value="Add Position" class="btn btn-primary mb-2"/>

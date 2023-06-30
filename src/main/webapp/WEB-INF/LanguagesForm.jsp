@@ -40,10 +40,10 @@
 	    		<h4 class="display-6">Pick Your Top 5 Languages</h4>
 	    	</div>
 	    	<div class="row">
-	    		<select class="form-select" name="skills" multiple>
+	    		<select class="form-select" name="skills" onchange="window.location.href = this.value;" multiple>
 	    			<c:forEach var="skill" items="${skills}">
 	    				<c:if test="${skill.getSkillType().equals('language')}">
-	    					<option value="${skill}"><c:out value="${skill.getSkillName()}"/></option>
+	    					<option value="/skills/addLanguage/${skill.id}"><c:out value="${skill.getSkillName()}"/></option>
 	    				</c:if>
 	    			</c:forEach>
 	    		</select>

@@ -40,7 +40,10 @@ public class SkillsControllers {
 	
 	// POST for submission of languages page
 	@PostMapping("/devs/skills/languages")
-	public String langSubmit(@RequestParam("skills") List<Skill> skills, @RequestParam("bio") String bio, HttpSession session, Model model) {
+	public String langSubmit(@RequestParam("bio") String bio, HttpSession session, Model model) {
+		if (session.getAttribute("dev") == null) {
+			return "redirect:/devs/login";
+		}
 		User dev = (User) session.getAttribute("dev");
 		dev.setBio(bio);
 		
@@ -51,24 +54,24 @@ public class SkillsControllers {
 	}
 	
 //	// Used for both languages an frameworks and it will render if the type is right in the jsp page
-//	@GetMapping("/skills/addLanguage/{id}")
-//	private String addLanguage(HttpSession session, @PathVariable("id") Long id) {
-//		if (session.getAttribute("dev") == null) {
-//			return "redirect:/devs/login";
-//		}
-//		
-//		User user = (User) session.getAttribute("dev");
-//		User loggedUser = userServ.findById(user.getId());
-//		Skill addedSkill = skillServ.findById(id);
-//		UserHasSkills userSkills = new UserHasSkills();
-//		userSkills.setUsers(loggedUser);
-//		userSkills.setSkills(addedSkill);
-//		addedSkill.getUsers().add(userSkills);
-//		skillServ.AddSkill(addedSkill);
-//		
-//		return "redirect:/devs/skills/languages";
-//		
-//	}
+	@GetMapping("/skills/addLanguage/{id}")
+	private String addLanguage(HttpSession session, @PathVariable("id") Long id) {
+		if (session.getAttribute("dev") == null) {
+			return "redirect:/devs/login";
+		}
+		
+	User user = (User) session.getAttribute("dev");
+	User loggedUser = userServ.findById(user.getId());
+	Skill addedSkill = skillServ.findById(id);
+	UserHasSkills userSkills = new UserHasSkills();
+	userSkills.setUsers(loggedUser);
+	userSkills.setSkills(addedSkill);
+	addedSkill.getUsers().add(userSkills);
+	skillServ.AddSkill(addedSkill);
+	
+		return "redirect:/devs/skills/languages";
+	
+	}
 	
 	@GetMapping("/devs/skills/frameworks")
 	public String FrameWorks(HttpSession session, Model model) {
@@ -86,7 +89,10 @@ public class SkillsControllers {
 	
 	//POST for submission of framework skills page
 	@PostMapping("/devs/skills/frameworks")
-	public String frameworkSubmit(@RequestParam("skills") List<Skill> skills, HttpSession session, Model model) {
+	public String frameworkSubmit(HttpSession session, Model model) {
+		if (session.getAttribute("dev") == null) {
+			return "redirect:/devs/login";
+		}
 		User dev = (User) session.getAttribute("dev");
 		
 		// TO-DO SET SKILLS TO USER
