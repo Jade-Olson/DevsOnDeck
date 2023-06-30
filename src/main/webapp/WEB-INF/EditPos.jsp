@@ -1,14 +1,17 @@
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page isErrorPage="true" %> 
+<%@ page isELIgnored="false" %>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<title>Welcome to DevsOnDeck</title>
+<title>New Position</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg">
@@ -26,26 +29,27 @@
 
 <div class="container">
 <div class="row p-4 mt-5 align-items-center rounded-3 border shadow-lg">
-    <div class="border row">
-    	<h1 class="display-4 col">Welcome ${dev.firstName}</h1>
-    	<div class = "border">
-		<h2>Available jobs</h2>
-		<c:forEach items = "${positions}" var="position">
-		<div class = "row">
-		<c:out value ="${position.name}"/>
-		</div>
-		</c:forEach>
-	</div>
-	<div>
-	<h2>My Skills</h2>
-		<c:forEach items = "${dev.skills}" var="dev">
-		<div class = "row">
-		<c:out value ="${dev.skills.skillName}"/>
-		</div>
-		</c:forEach>
-	</div>
-    	
-    	</div>
+    <h1 class="display-4">Edit Position</h1>
+    <form:form method="POST" action="/postition/${position.id}" modelAttribute="position">
+    <input type="hidden" name="_method" value="put">
+        <div class="mt-2">
+            <form:label path="name" class="form-label">Name:</form:label>
+            <form:input path="name" class="form-control" value = "${position.name}"/>
+           	<form:errors path="name" class="text-danger"/>
+        </div>
+        <div class="mt-2">
+            <form:label path="description" class="form-label">Description:</form:label>
+            <form:textarea path="description" class="form-control" value = "${position.name}"/>
+            <form:errors path="description" class="text-danger"/>
+        </div>
+        <div class="mt-2">
+            <form:label path="skills" class="form-label">Skills:</form:label>
+        </div>
+        <div class="mt-2">
+	        <input type="submit" value="Edit Position" class="btn btn-primary mb-2"/>
+	        <a class="btn btn-secondary mb-2" href="/orgs/dashboard">Go Back</a>
+	    </div>
+    </form:form>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

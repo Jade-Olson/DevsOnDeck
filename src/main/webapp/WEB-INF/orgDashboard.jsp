@@ -8,7 +8,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<title>Dod Dashboard</title>
+<title>Dev Dashboard</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg">
@@ -29,14 +29,18 @@
 		<div class="col">
 			<div class="row">
 				<div class="col"></div>
-				<a class="col btn btn-primary" href="/org/jobs/new">List a New Position</a>
+				<a class="col btn btn-primary" href="/orgs/jobs/new">List a New Position</a>
 				<div class="col"></div>
 			</div>
 			<div class="border p-1 mt-4">
 				<h4 class="display-5">Positions to Fill</h4>
 				<div>
 					<c:forEach var="position" items="${allPositions}">
-						<p class="lead"><c:out value="${position.getName()}"/></p>
+						<a class="lead" href="/orgs/${position.id}/edit" ><c:out value="${position.name}"/></a>
+							<form action="/orgs/delete/${position.id}" method="post">
+	                    <input type="hidden" name="_method" value="delete">
+	                    <input type="submit" value="Delete">
+                   </form>
 					</c:forEach>
 				</div>
 			</div>
@@ -48,6 +52,7 @@
 			<c:forEach var="dev" items="${devs}">
 				<div class="border mt-3">
 					<p class="lead"><c:out value="${dev.getFirstName()}"/> <c:out value="${dev.getLastName()}"/></p>
+				
 					<div class="row">
 						
 						<!-- TO-DO: ADD SKILLS HERE -->
